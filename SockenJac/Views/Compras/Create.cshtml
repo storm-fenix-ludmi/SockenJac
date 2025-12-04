@@ -1,0 +1,81 @@
+﻿@model IEnumerable<SockenJac.Models.Producto>
+
+@{
+    ViewData["Title"] = "Reabastecer";
+}
+
+<h1>Reabastecer productos</h1>
+
+<form asp-action="Create" method="post">
+    @Html.AntiForgeryToken()
+
+    <div style="display:flex; flex-wrap:wrap; gap:20px;">
+        @foreach (var p in Model)
+        {
+            <div style="padding:10px; width:220px; border-radius:8px; text-align:center; border:1px solid pink; background-color: lightpink;" data-foto="@p.foto">
+                @if (!string.IsNullOrEmpty(p.foto))
+                {
+                    <img src="~/fotografias/@p.foto"
+                         style="width:100%; height:140px; object-fit:cover; border-radius:6px;" />
+                }
+
+                <h4>@p.Nombre</h4>
+                <p>Stock actual: @p.Cantidad</p>
+                <p>Precio actual: $@p.Precio</p>
+
+                <input type="hidden" name="productoId" value="@p.Id" />
+                <input type="hidden" name="precioActual" value="@p.Precio" />
+
+                <label>Cantidad a agregar</label><br />
+                <input type="number" name="cantidadAgregada" min="0" value="0" style="width:90px;" />
+                <br /><br />
+
+                <label>Precio nuevo</label><br />
+                <input type="number" name="precioNuevo" step="1" value="@p.Precio" style="width:90px;" />
+            </div>
+        }
+    </div>
+
+    <br />
+
+    <button type="button" id="btnConfirmCompra" style="padding:10px 20px; font-size:16px;">Reabastecer</button>
+</form>
+
+<script>
+    document.getElementById('btnConfirmCompra').addEventListener('click', function () {
+        let mensaje = "¿Confirmar reabastecimiento? de estos productos: \n\n";
+        let hayCambios = false;
+
+        document.querySelectorAll('div[data-foto]').forEach(div => {
+            let cantidadInput = div.querySelector('input[name="cantidadAgregada"]');
+            let precioNuevoInput = div.querySelector('input[name="precioNuevo"]');
+            let precioActualInput = div.querySelector('input[name="precioActual"]');
+
+            let cantidad = parseInt(cantidadInput.value) || 0;
+            let precioNuevo = parseInt(precioNuevoInput.value) || 0;
+            let precioActual = parseInt(precioActualInput.value) || 0;
+
+
+            if (cantidad > 0 || precioNuevo !== precioActual) {
+                hayCambios = true;
+
+                let nombre = div.querySelector('h4').innerText;
+                let foto = div.dataset.foto || 'Sin foto';
+
+                mensaje += `Foto: ${foto}\n`;
+                mensaje += `Nombre: ${nombre}\n`;
+                mensaje += `Cantidad a agregar: ${cantidad}\n`;
+                mensaje += `Precio nuevo: $${precioNuevo}\n\n`;
+            }
+        });
+
+        if (!hayCambios) {
+            alert("No hay cambios para reabastecer (ninguna cantidad agregada ni precio modificado).");
+            return;
+        }
+
+        if (confirm(mensaje)) {
+            this.closest('form').submit();
+        }
+    });
+</script>

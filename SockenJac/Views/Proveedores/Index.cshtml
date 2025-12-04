@@ -1,0 +1,31 @@
+﻿@model IEnumerable<SockenJac.Models.Proveedores>
+
+@{
+    ViewData["Title"] = "Proveedores";
+}
+
+<h1>Lista de Proveedores</h1>
+
+@if (Model != null && Model.Any())
+{
+    <ul class="list-group">
+        @foreach (var proveedor in Model)
+        {
+            <li class="list-group-item">
+                <a href="#" class="text-decoration-none">@proveedor.NombreProveedores</a> 
+                <a class="ms-3 btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@proveedor.Id">Eliminar</a>
+                <a class="ms-3 btn btn-sm btn-danger" asp-action="Edit" asp-route-id="@proveedor.Id">editar</a>
+
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p>No hay proveedores registrados.</p>
+}
+
+<div class="mt-3">
+    <a asp-action="Create" class="btn btn-primary">Agregar Nuevo Proveedor</a>
+    <a asp-controller="Home" asp-action="Index" class="btn btn-secondary ms-2">Volver al Inicio</a>
+</div>

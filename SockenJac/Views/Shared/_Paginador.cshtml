@@ -1,0 +1,29 @@
+﻿@model SockenJac.ViewModels.paginador
+
+<nav aria-label="...">
+    <ul class="pagination justify-content-center">
+        @if (Model.paginaActual > 1)
+        {
+            <li class="page-item">
+                <a class="page-link" asp-all-route-data="@Model.filtros" asp-route-pagina="1" tabindex="-1" aria-disabled="true">Primera</a>
+            </li>
+        }
+        <li class="page-item @(Model.paginaActual > 1 ? "" : "disabled")">
+            <a class="page-link" asp-all-route-data="@Model.filtros" asp-route-pagina="@(Model.paginaActual-1)" tabindex="-1" aria-disabled="true">Anterior</a>
+        </li>
+        <li class="page-item active" aria-current="page">
+            <a class="page-link">@Model.paginaActual</a>
+        </li>
+        <li class="page-item @(Model.paginaActual == Model.cantPaginas ? "disabled" : "")">
+            <a class="page-link" asp-all-route-data="@Model.filtros" asp-route-pagina="@(Model.paginaActual+1)">Siguiente</a>
+        </li>
+        @if (Model.paginaActual != Model.cantPaginas)
+        {
+            <li class="page-item">
+                <a class="page-link" asp-all-route-data="@Model.filtros" asp-route-pagina="@Model.cantPaginas" aria-disabled="true">Ultima (@Model.cantPaginas)</a>
+            </li>
+        }
+    </ul>
+    Cantidad de Productos: @Model.cantRegistros
+</nav>
+

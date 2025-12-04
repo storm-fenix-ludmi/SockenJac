@@ -1,0 +1,128 @@
+﻿@model SockenJac.ViewModels.vmProductos
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+@if (ViewBag.Error != null)
+{
+    <hr />
+    <h2>
+        @ViewBag.Error
+    </h2>
+    <hr />
+}
+<h1>Productos</h1>
+
+<form asp-action="Index" method="get">
+    Nombre: <input type="text" asp-for="busqNombre" />
+    Descripcion: <input type="text" asp-for="busqDescripcion" />
+    Precio: <input type="number" asp-for="busqPrecio" />
+    <input type="submit" value="Filtrar" />
+</form>
+
+
+
+ @if (Model.ListaProductos != null && Model.ListaProductos.Count > 0)
+{
+
+    <form id="formVender" method="post" action="/Productos/Vender">
+        <div style="display:flex; flex-wrap:wrap; gap:15px;">
+            @foreach (var p in Model.ListaProductos)
+            {
+                <div class="card" style="width:220px; padding:10px; border:1px solid gray;">
+                    @if (!string.IsNullOrEmpty(p.foto))
+                    {
+                        <a asp-action="Details" asp-route-id="@p.Id">
+                            <img src="~/fotografias/@p.foto" class="card-img-top" style="object-fit: cover; height: 150px;" alt="Imagen" />
+                        </a>
+                    }
+                    <h3>@p.Nombre</h3>
+                    <p>@p.Descripcion</p>
+                    <p>Precio: $@p.Precio</p>
+                    <p>En Stock: <span id="stock-@p.Id">@p.Cantidad</span></p>
+
+                    <input type="hidden" name="productoId" value="@p.Id" />
+
+                    <div style="display:flex; gap:6px; justify-content:center;">
+                        <button type="button" class="btn-dec" data-id="@p.Id">-</button>
+
+                        <input type="number" id="cant-@p.Id"name="cantidad" value="0" readonly style="width:50px; text-align:center;" />
+
+                        <button type="button" class="btn-inc" data-id="@p.Id">+</button>
+                    </div>
+                    <div style="display:flex; gap:6px; justify-content:center;">
+                        <a asp-action="Edit" asp-route-id="@p.Id">Editar</a> |
+                        <a asp-action="Delete" asp-route-id="@p.Id">eliminar</a>
+                    </div>
+
+                </div>
+            }
+        </div>
+
+        <button type="button" id="btnVender"style="margin-top:20px; width:200px; height:50px;"> Vender </button>
+    </form>
+ }
+else
+{
+<h4>No existen datos según filtros</h4>
+}
+    <partial name="_Paginador" for="@Model.paginadorVM" />
+
+
+@section Scripts {
+    <script>
+     
+        document.querySelectorAll('.btn-inc').forEach(btn => {btn.onclick = function () 
+            {
+                const id = this.dataset.id;
+                const input = document.getElementById('cant-' + id);
+                const stock = parseInt(document.getElementById('stock-' + id).innerText);
+
+                let val = parseInt(input.value);
+                if (val < stock) input.value = val + 1;
+            };
+        });
+
+        document.querySelectorAll('.btn-dec').forEach(btn => {
+            btn.onclick = function () {
+                const id = this.dataset.id;
+                const input = document.getElementById('cant-' + id);
+
+                let val = parseInt(input.value);
+                if (val > 0) input.value = val - 1;
+            };
+        });
+
+       
+        document.getElementById('btnVender').onclick = function () {
+            let mensaje = "¿Confirmar venta? de estos productos:\n\n";
+            let hayProductos = false;
+
+            document.querySelectorAll('input[id^="cant-"]').forEach(inp => {
+                let cantidad = parseInt(inp.value);
+                if (cantidad > 0) 
+                {
+                    hayProductos = true;
+
+                    const id = inp.id.replace("cant-", "");
+                    const nombre = inp.closest(".card").querySelector("h3").innerText;
+
+                    mensaje += `Producto: ${nombre}\nCantidad: ${cantidad}\n\n`;
+                }
+            });
+
+            if (!hayProductos) {
+                alert("No seleccionaste ningún producto.");
+                return;
+            }
+
+            if (confirm(mensaje)) {
+                document.getElementById("formVender").submit();
+            }
+        };
+    </script>
+}
+
+

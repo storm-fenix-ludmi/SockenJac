@@ -1,0 +1,41 @@
+﻿@model IEnumerable<SockenJac.Models.Producto>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+@if (ViewBag.Error != null)
+{
+    <hr />
+    <h2>
+        @ViewBag.Error
+    </h2>
+    <hr />
+}
+<h1>Bienvenidos a Productos</h1>
+
+
+
+    <form >
+        <div style="display:flex; flex-wrap:wrap; gap:15px;">
+            @foreach (var p in Model)
+            {
+                <div class="card" style="width:220px; padding:10px; border:1px solid ;">
+                    @if (!string.IsNullOrEmpty(p.foto))
+                    {
+                        <a asp-action="Details" asp-route-id="@p.Id">
+                            <img src="~/fotografias/@p.foto" class="card-img-top" style="object-fit: cover; height: 150px;" alt="Imagen" />
+                        </a>
+                    }
+                    <h3>@p.Nombre</h3>
+                    <p>@p.Descripcion</p>
+                    <p>Precio: $@p.Precio</p>
+                    <p>En Stock: <span id="stock-@p.Id">@p.Cantidad</span></p>  
+                </div>
+            }
+        </div>
+
+    </form>
+
+

@@ -1,0 +1,104 @@
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    background-image: url('../fotografias/fondo.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    margin-bottom: 60px;
+    display: flex !important;
+    flex-direction: column !important;
+    min-height: 100vh !important;
+}
+
+main {
+    flex-grow: 1 !important;
+}
+
+.table {
+    background-color: hotpink;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+    .table th {
+        background-color: pink;
+        color: black;
+    }
+
+.btn, button {
+    background-color: lightpink;
+    color: black;
+    border-radius: 5px;
+    padding: 10px 15px;
+    transition: background-color 0.3s;
+}
+
+    .btn:hover, button:hover {
+        background-color: lightgreen;
+    }
+
+.form-control, select {
+    border-radius: 5px;
+    border: 1px solid #ced4da;
+    transition: border-color 0.3s;
+}
+
+    .form-control:focus, select:focus {
+        border-color: orchid;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+
+header {
+    background-color: palevioletred;
+    color: black;
+    text-align: center;
+}
+
+.navbar-custom {
+    background-color: palevioletred !important;
+}
+
+footer {
+    margin-top: auto !important;
+    background-color: palevioletred;
+    text-align: center;
+}
+
+.footer a {
+    color: deeppink;
+}
+
+    .footer a:hover {
+        text-decoration: underline;
+    }
+
+.navbar {
+    background-color: #FF69B4 !important;
+}
+
+.container.flex-grow-1 {
+    flex-grow: 1 !important;
+}
+
+.card {
+    background-color: lightpink !important;
+    border-radius: 5px;
+}

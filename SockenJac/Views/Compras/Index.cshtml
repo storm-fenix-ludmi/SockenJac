@@ -1,0 +1,72 @@
+﻿@model SockenJac.ViewModels.vmCompras
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Historial de reabastecimiento</h2>
+
+@if (ViewBag.Error != null)
+{
+    <hr />
+    <h2>
+        @ViewBag.Error
+    </h2>
+    <hr />
+}
+
+<form asp-action="Index" method="get">
+   Fecha Desde: <input type="date" asp-for="busqFechaDesde" />
+    Fecha Hasta: <input type="date" asp-for="busqFechaHasta" />
+    Producto: <select name="ProductoId" asp-for="ProductoId" asp-items="Model.ListaProductos">
+        <option value="">Todas</option>
+    </select>
+    <input type="submit" value="Filtrar" />
+</form>
+
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Foto</th>
+            <th>Producto</th>
+            <th>Cantidad Agregada</th>
+            <th>Precio Anterior</th>
+            <th>Precio Nuevo</th>
+            <th>Fecha</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.ListaCompras != null && Model.ListaCompras.Count > 0)
+        {
+
+        @foreach (var item in Model.ListaCompras)
+        {
+            <tr>
+                <td>
+                    <img src="~/fotografias/@item.foto" style="width:60px; height:60px; object-fit:cover;" />
+                </td>
+                <td>@item.ProductoNombre</td>
+                <td>@item.CantidadAgregada</td>
+                <td>$@item.PrecioAnterior</td>
+                <td style="font-weight:bold;">$@item.PrecioNuevo</td>
+                <td>@item.Fecha.ToString("dd/MM/yyyy HH:mm")</td>
+                <td>
+                    <a asp-action="Delete" asp-route-id="@item.Id">Eliminar</a>  
+                </td>
+            </tr>
+        }
+        }
+        else
+        {
+            <tr>
+                <td colspan="5">
+                    <h4>No existen datos segun filtros</h4>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<partial name="_Paginador" for="@Model.paginadorVM" />
+<a href="/Productos/Index" class="btn btn-secondary">Volver a Productos</a>

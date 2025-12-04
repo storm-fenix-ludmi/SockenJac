@@ -1,0 +1,79 @@
+﻿@model SockenJac.ViewModels.vmVentas
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Ventas</h1>
+
+@if (ViewBag.Error != null)
+{
+    <hr />
+    <h2>
+        @ViewBag.Error
+    </h2>
+    <hr />
+}
+
+<form asp-action="Index" method="get">
+    Fecha Desde: <input type="date" asp-for="busqFechaDesde" />
+    Fecha Hasta: <input type="date" asp-for="busqFechaHasta" />
+    Producto: <select name="ProductoId" asp-for="ProductoId" asp-items="Model.ListaProductos">
+        <option value="">Todas</option>
+    </select>
+    <input type="submit" value="Filtrar" />
+</form>
+
+<table class="table table-bordered table-hover">
+    <!-- Cambiado para usar clases de Bootstrap como en compras -->
+    <thead>
+        <tr>
+            <th>Imagen</th>
+            <th>Fecha</th>
+            <th>Producto</th>
+            <th>Cantidad</th>
+            <th>Total</th>
+            <th>Acciones</th> <!-- Agregado para consistencia -->
+        </tr>
+    </thead>
+
+    <tbody>
+        @if (Model.ListaVentas != null && Model.ListaVentas.Count > 0)
+        {
+            @foreach (var v in Model.ListaVentas)
+            {
+                <tr>
+                    <td>
+                        @if (!string.IsNullOrEmpty(v.foto))
+                        {
+                            <img src="~/fotografias/@v.foto"
+                                 style="width:80px; height:80px; object-fit:cover; border-radius:6px;" />
+                        }
+                        else
+                        {
+                            <span>Sin foto</span>
+                        }
+                    </td>
+
+                    <td>@v.Fecha</td>
+                    <td>@v.ProductoNombre</td>
+                    <td>@v.Cantidad</td>
+                    <td>$@v.Total</td>
+                    <td>
+                        <a asp-action="Delete" asp-route-id="@v.Id">eliminar</a>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="6">
+                    <!-- Ajustado a 6 columnas para incluir Acciones -->
+                    <h4>No existen datos segun filtros</h4>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<partial name="_Paginador" for="@Model.paginadorVM" />
+<a href="/Productos/Index" class="btn btn-secondary">Volver a Productos</a>
