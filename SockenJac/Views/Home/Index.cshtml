@@ -24,7 +24,7 @@
                 <div class="card" style="width:220px; padding:10px; border:1px solid ;">
                     @if (!string.IsNullOrEmpty(p.foto))
                     {
-                        <a asp-action="Details" asp-route-id="@p.Id">
+                    <a asp-controller="Productos" asp-action="Details" asp-route-id="@p.Id">
                             <img src="~/fotografias/@p.foto" class="card-img-top" style="object-fit: cover; height: 150px;" alt="Imagen" />
                         </a>
                     }
