@@ -25,19 +25,22 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Productos" asp-action="Index">Productos</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Productos" asp-action="Index">Ventas</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Productos" asp-action="Create">nuevo producto</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Productos" asp-action="Create">Nuevo Producto</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Ventas" asp-action="Index">ventas</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Ventas" asp-action="Index">Detalles De Ventas</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Compras" asp-action="Create">compras de reabastecimiento</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Compras" asp-action="Create">Compras De Reabastecimiento</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Compras" asp-action="Index">compras detalle de reabastecimiento</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Compras" asp-action="Index">Detalles De Compras De Reabastecimiento</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Proveedores" asp-action="Index">Proveedores</a>
                         </li>
                     </ul>
                     <partial name="_LoginPartial" />
@@ -53,7 +56,6 @@
     <footer class="border-top footer text-muted">
         <div class="container d-flex align-items-center">
             <img src="~/fotografias/logo.jpg" alt="Logo" style="height:40px; width:auto; margin-right:10px;" />Creara en el 2025 - SockenJac -
-            <a class="m-3" asp-area="" asp-controller="Proveedores" asp-action="Index"> proveedores</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

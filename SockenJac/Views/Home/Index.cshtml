@@ -1,4 +1,6 @@
-﻿@model IEnumerable<SockenJac.Models.Producto>
+﻿@* @model IEnumerable<SockenJac.Models.Producto>
+ *@
+ @model SockenJac.ViewModels.vmProductos
 
 @{
     ViewData["Title"] = "Home Page";
@@ -15,11 +17,21 @@
 }
 <h1>Bienvenidos a Productos</h1>
 
+<form asp-action="Index" method="get">
+    Nombre: <input type="text" asp-for="busqNombre" />
+    Descripcion: <input type="text" asp-for="busqDescripcion" />
+    Precio: <input type="number" asp-for="busqPrecio" />
+    <input type="submit" value="Filtrar" />
+</form>
 
+
+
+ @if (Model.ListaProductos != null && Model.ListaProductos.Count > 0)
+{
 
     <form >
         <div style="display:flex; flex-wrap:wrap; gap:15px;">
-            @foreach (var p in Model)
+            @foreach (var p in Model.ListaProductos)
             {
                 <div class="card" style="width:220px; padding:10px; border:1px solid ;">
                     @if (!string.IsNullOrEmpty(p.foto))
@@ -38,4 +50,9 @@
 
     </form>
 
+}
+else
+{
+    <h4>No existen datos según filtros</h4>
+}
 

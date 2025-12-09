@@ -32,7 +32,7 @@ namespace SockenJac.Controllers
             paginador paginador = new paginador
             {
                 paginaActual = pagina,
-                cantRegistrosPagina = 3,
+                cantRegistrosPagina = 10,
             };
 
             var appDBcontext = _context.Ventas.Include(a => a.Producto).Select(e => e);

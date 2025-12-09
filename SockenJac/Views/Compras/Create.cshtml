@@ -24,7 +24,7 @@
                 <p>Precio actual: $@p.Precio</p>
 
                 <input type="hidden" name="productoId" value="@p.Id" />
-                <input type="hidden" name="precioActual" value="@p.Precio" />
+                <input type="hidden" name="PrecioAnterior" value="@p.Precio" />
 
                 <label>Cantidad a agregar</label><br />
                 <input type="number" name="cantidadAgregada" min="0" value="0" style="width:90px;" />
@@ -43,20 +43,20 @@
 
 <script>
     document.getElementById('btnConfirmCompra').addEventListener('click', function () {
-        let mensaje = "¿Confirmar reabastecimiento? de estos productos: \n\n";
+        let mensaje = "¿Confirmar reabastecimiento?\n\n";
         let hayCambios = false;
 
         document.querySelectorAll('div[data-foto]').forEach(div => {
             let cantidadInput = div.querySelector('input[name="cantidadAgregada"]');
             let precioNuevoInput = div.querySelector('input[name="precioNuevo"]');
-            let precioActualInput = div.querySelector('input[name="precioActual"]');
+            let PrecioAnteriorInput = div.querySelector('input[name="PrecioAnterior"]');
 
             let cantidad = parseInt(cantidadInput.value) || 0;
             let precioNuevo = parseInt(precioNuevoInput.value) || 0;
-            let precioActual = parseInt(precioActualInput.value) || 0;
+            let PrecioAnterior = parseInt(PrecioAnteriorInput.value) || 0;
 
 
-            if (cantidad > 0 || precioNuevo !== precioActual) {
+            if (cantidad > 0 || precioNuevo != PrecioAnterior) {
                 hayCambios = true;
 
                 let nombre = div.querySelector('h4').innerText;

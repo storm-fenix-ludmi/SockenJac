@@ -68,7 +68,6 @@ else
 {
 <h4>No existen datos según filtros</h4>
 }
-    <partial name="_Paginador" for="@Model.paginadorVM" />
 
 
 @section Scripts {
@@ -97,7 +96,7 @@ else
 
        
         document.getElementById('btnVender').onclick = function () {
-            let mensaje = "¿Confirmar venta? de estos productos:\n\n";
+            let mensaje = "¿Confirmar venta?\n\n";
             let hayProductos = false;
 
             document.querySelectorAll('input[id^="cant-"]').forEach(inp => {

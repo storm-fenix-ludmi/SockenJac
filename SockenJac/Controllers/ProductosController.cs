@@ -27,38 +27,26 @@ namespace SockenJac.Controllers
             _env = env;
         }
 
-        public async Task<IActionResult> Index(string busqNombre, string busqDescripcion, int? busqPrecio, int pagina = 1)
+        public async Task<IActionResult> Index(string busqNombre, string busqDescripcion, int? busqPrecio)
         {
-            paginador paginador = new paginador
-            {
-                paginaActual = pagina,
-                cantRegistrosPagina = 3,
-            };
+           
 
             var appDBcontext = _context.Productos.Where(p => !p.Activo).Select(e => e);
 
             if (!string.IsNullOrEmpty(busqNombre))
             {
                 appDBcontext = appDBcontext.Where(e => e.Nombre.Contains(busqNombre));
-                paginador.filtros.Add("busqNombre", busqNombre);
+           
             }
             if (!string.IsNullOrEmpty(busqDescripcion))
             {
                 appDBcontext = appDBcontext.Where(e => e.Descripcion.Contains(busqDescripcion));
-                paginador.filtros.Add("busqDescripcion", busqDescripcion);
             }
             if (busqPrecio.HasValue)
             {
                 appDBcontext = appDBcontext.Where(e => e.Precio == busqPrecio);
-                paginador.filtros.Add("busqPrecio", busqPrecio.ToString());
             }
-           
-
-            paginador.cantRegistros = appDBcontext.Count();
-
-            appDBcontext = appDBcontext
-                .Skip(paginador.cantRegistrosPagina * (pagina - 1))
-                .Take(paginador.cantRegistrosPagina);
+          
 
             vmProductos modelo = new vmProductos
             {
@@ -66,7 +54,6 @@ namespace SockenJac.Controllers
                 busqNombre = busqNombre,
                 busqDescripcion = busqDescripcion,
                 busqPrecio = busqPrecio,
-                paginadorVM = paginador
             };
 
             return View(modelo);

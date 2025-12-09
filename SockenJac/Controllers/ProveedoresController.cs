@@ -2,19 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SockenJac.Data;
 using SockenJac.Models;
-using SockenJac.ViewModels;
-
 
 namespace SockenJac.Controllers
 {
-    [Authorize]
-
     public class ProveedoresController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -28,6 +23,24 @@ namespace SockenJac.Controllers
         public async Task<IActionResult> Index()
         {
             return View(await _context.Proveedores.ToListAsync());
+        }
+
+        // GET: Proveedores/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var proveedores = await _context.Proveedores
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (proveedores == null)
+            {
+                return NotFound();
+            }
+
+            return View(proveedores);
         }
 
         // GET: Proveedores/Create
@@ -51,6 +64,8 @@ namespace SockenJac.Controllers
             }
             return View(proveedores);
         }
+
+        // GET: Proveedores/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -66,7 +81,7 @@ namespace SockenJac.Controllers
             return View(proveedores);
         }
 
-        // POST: Peliculas/Edit/5
+        // POST: Proveedores/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -100,7 +115,6 @@ namespace SockenJac.Controllers
             }
             return View(proveedores);
         }
-
 
         // GET: Proveedores/Delete/5
         public async Task<IActionResult> Delete(int? id)

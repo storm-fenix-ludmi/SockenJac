@@ -32,7 +32,7 @@ namespace SockenJac.Controllers
             paginador paginador = new paginador
             {
                 paginaActual = pagina,
-                cantRegistrosPagina = 3,
+                cantRegistrosPagina = 10,
             };
 
             var appDBcontext = _context.Compras.Include(a => a.Producto).Select(e => e);
@@ -84,13 +84,13 @@ namespace SockenJac.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(int[] productoId, int[] cantidadAgregada, int[] precioNuevo)
+        public async Task<IActionResult> Create(int[] productoId, int[] cantidadAgregada, int[] precioNuevo, int[] PrecioAnterior)
         {
             for (int i = 0; i < productoId.Length; i++)
             {
             
 
-                if (cantidadAgregada[i] > 0 || precioNuevo[i] != 0)
+                if (cantidadAgregada[i] > 0 || precioNuevo[i] != PrecioAnterior[i])
                 {
                     var prod = await _context.Productos.FindAsync(productoId[i]);
                     if (prod == null || prod.Activo) continue;

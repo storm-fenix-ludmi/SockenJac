@@ -12,7 +12,10 @@
         @foreach (var proveedor in Model)
         {
             <li class="list-group-item">
-                <a href="#" class="text-decoration-none">@proveedor.NombreProveedores</a> 
+
+				<a asp-action="Details" asp-route-id="@proveedor.Id">
+                <a  href="#" class="text-decoration-none">@proveedor.NombreProveedores</a> 
+                </a>
                 <a class="ms-3 btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@proveedor.Id">Eliminar</a>
                 <a class="ms-3 btn btn-sm btn-danger" asp-action="Edit" asp-route-id="@proveedor.Id">editar</a>
 

@@ -39,10 +39,10 @@ namespace SockenJac.Data.Migrations
                 nullable: false,
                 defaultValue: "");
 
-            migrationBuilder.AddColumn<decimal>(
+            migrationBuilder.AddColumn<int>(
                 name: "PrecioAnterior",
                 table: "Compras",
-                type: "decimal(18,2)",
+                type: "int",
                 nullable: false,
                 defaultValue: 0m);
 
@@ -112,7 +112,7 @@ namespace SockenJac.Data.Migrations
                     ProductoId = table.Column<int>(type: "int", nullable: false),
                     VentaId = table.Column<int>(type: "int", nullable: false),
                     CantidadVendida = table.Column<int>(type: "int", nullable: false),
-                    PrecioUnitario = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                    PrecioUnitario = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

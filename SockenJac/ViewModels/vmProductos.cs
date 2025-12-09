@@ -11,7 +11,6 @@ namespace SockenJac.ViewModels
         public string busqNombre { get; set; }
         public string busqDescripcion { get; set; }
         public int? busqPrecio { get; set; }
-        public paginador? paginadorVM { get; set; }
     }
 }
 
